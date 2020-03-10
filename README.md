@@ -17,7 +17,7 @@
 
     {
         "require": {
-            "deyin/dyoauth": "~2.0"
+            "deyin/dyoauth": "~1.0"
         }
     }
 
