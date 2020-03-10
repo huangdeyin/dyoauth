@@ -1,0 +1,14 @@
+{
+  "name": "yurunsoft/yurun-oauth-login",
+  "description": "第三方登录授权SDK，用于第三方QQ，微信，微博登录",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Yurun\\OAuthLogin\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=5.4"
+  }
+}
