@@ -11,7 +11,6 @@
     composer require deyin/dyoauth
 </code>
 
-
 安装方式二：
 
 在您的composer.json中加入配置：
