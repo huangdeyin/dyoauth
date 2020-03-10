@@ -1,5 +1,5 @@
 {
-  "name": "yurunsoft/yurun-oauth-login",
+  "name": "deyin/dyoauth",
   "description": "第三方登录授权SDK，用于第三方QQ，微信，微博登录",
   "type": "library",
   "license": "MIT",
