@@ -38,40 +38,30 @@ class qqOauth
     /**
      * @var string
      * */
-    private $_appId = 'your appId';//QQ互联ID
+    private $_appId = '';//QQ互联ID
 
     /**
      * @var string
      * */
-    private $_appKey = 'your appKey';//QQ互联
-
-
-    /**
-     * @var string
-     * */
-    private $_callbackUrl = 'your callback_url';//回调URL
+    private $_appKey = '';//QQ互联
 
 
     /**
      * @var string
      * */
-    private $_scope = 'your scope';//接口类型
+    private $_callbackUrl = '';//回调URL
 
 
     /**
-     * @var null
-     */
-    private static $instance = null;
+     * @var string
+     * */
+    private $_scope = 'snsapi_login';//接口类型
 
-    /**
-     * @return null|qqOauth
-     */
-    public static function instance()
+    public function __construct($appId='',$appKey='',$callbackUrl='')
     {
-        if (empty(self::$instance)) {
-            self::$instance = new self();
-        }
-        return self::$instance;
+        $this->setAppId($appId);
+        $this->setAppKey($appKey);
+        $this->setCallbackUrl($callbackUrl);
     }
 
     /**
@@ -120,7 +110,7 @@ class qqOauth
         $params['openid'] = $openId['openid'];
         $params['format'] = 'json';
         $result = $this->getApiData($apiUrl, $params);
-        $result['nickname'] = self::removeEmoji($result['nickname']);
+        $result['nickname'] = $this->removeEmoji($result['nickname']);
         return $result;
     }
 
@@ -199,7 +189,7 @@ class qqOauth
     }
 
     // 过滤掉emoji表情
-    public static function removeEmoji($str)
+    public function removeEmoji($str)
     {
         $str = preg_replace_callback(
             '/./u',
