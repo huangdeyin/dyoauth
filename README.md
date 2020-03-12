@@ -22,6 +22,7 @@
     }
 
 示例：
+发起请求
 
     /**
      * 第三方登录入口
@@ -38,3 +39,9 @@
         }
         $this->redirect($url);
     }
+示例：
+接受回调
+
+    $qq = new qqOauth();
+    $code = $_GET['code'];
+    $qq->getUserInfo($code);;
