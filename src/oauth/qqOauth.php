@@ -62,7 +62,7 @@ class qqOauth
      * */
     private $_scope = 'snsapi_login';//接口类型
 
-    public function __construct($appId='',$appKey='',$callbackUrl='')
+    public function __construct($appId = '', $appKey = '', $callbackUrl = '')
     {
         $this->setAppId($appId);
         $this->setAppKey($appKey);
@@ -94,28 +94,45 @@ class qqOauth
     {
         $accessToken = $this->getAccessToken($code);
         if (empty($accessToken)) {
-            return array('error' => 'QQ认证失败');
+            return ['code' => 101, 'msg' => 'QQ认证失败'];
         }
         if (!empty($accessToken['error'])) {
-            return array('error' => $accessToken['error_description']);
+            return ['code' => 101, 'msg' => $accessToken['error_description']];
         }
-
-        $openId = $this->getOpenId($accessToken['access_token']);
-        if (empty($openId)) {
-            return array('error' => 'QQ认证失败');
+//        $params['unionid']=$this->getUnionId($accessToken['access_token']);
+        $openRes = $this->getUnionId($accessToken['access_token']);
+        if (empty($openRes)) {
+            return ['code' => 101, 'msg' => 'QQ认证失败'];
         }
-        if (!empty($openId['error'])) {
-            return array('error' => $openId['error_description']);
+        if (!empty($openRes['error'])) {
+            return ['code' => 101, 'msg' => $openRes['error_description']];
         }
         $apiUrl = $this->_apiHost . 'get_user_info';
-        $this->_openId = $openId['openid'];
+        $this->_openId = $openRes['openid'];
+        $this->_unionId = $openRes['unionid'];
         $params = array();
-        $params['oauth_consumer_key'] = $this->_appId;
+        $params['oauth_consumer_key'] = $this->getAppId();
         $params['access_token'] = $accessToken['access_token'];
-        $params['openid'] = $openId['openid'];
+        $params['openid'] = $openRes['openid'];
+        $params['unionid'] = $openRes['unionid'];
         $params['format'] = 'json';
         $result = $this->getApiData($apiUrl, $params);
-        $result['nickname'] = $this->removeEmoji($result['nickname']);
+        return $result;
+    }
+
+    /**
+     * 获取用户OpenId
+     * @param $accessToken
+     * @return mixed
+     */
+    private function getUnionId($accessToken)
+    {
+        //-------请求参数列表
+        $params = array();
+        $params["access_token"] = $accessToken;
+        $params['unionid'] = 1;
+        $response = file_get_contents($this->_getOpenIdUrl . '?' . http_build_query($params));
+        $result = $this->JsonpDecode($response);
         return $result;
     }
 
@@ -159,7 +176,6 @@ class qqOauth
         $result = $this->JsonpDecode($response);
         return $result;
     }
-
 
 
     /**
