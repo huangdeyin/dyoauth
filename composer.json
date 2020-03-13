@@ -3,6 +3,12 @@
   "description": "第三方登录授权SDK，用于第三方QQ，微信，微博登录",
   "type": "library",
   "license": "MIT",
+  "authors": [
+    {
+      "name": "deyin",
+      "email": "love94831@vip.qq.com"
+    }
+  ],
   "autoload": {
     "psr-4": {
       "dyoauth\\": "src/"

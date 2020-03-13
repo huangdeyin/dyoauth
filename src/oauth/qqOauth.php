@@ -5,7 +5,7 @@
  * ******************************************************************************
  */
 
-namespace dyoauth;
+namespace dyoauth\oauth;
 
 
 class qqOauth
@@ -14,6 +14,11 @@ class qqOauth
      * @var string
      */
     private $_openId = '';
+
+    /**
+     * @var string
+     */
+    private $_unionId = '';
 
     /**
      * @var string
@@ -154,6 +159,8 @@ class qqOauth
         $result = $this->JsonpDecode($response);
         return $result;
     }
+
+
 
     /**
      * 将字符串转换为可以进行json_decode的格式
